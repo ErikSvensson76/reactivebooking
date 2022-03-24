@@ -1,11 +1,9 @@
 package com.example.reactivebooking.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -16,13 +14,14 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table("app_role")
-public class AppRole {
+@Table(value = "app_role")
+public class AppRole extends BaseModel<AppRole> implements Persistable<String> {
+
     @Id
     @Column(value = "id")
     private String id;
     @Column(value = "user_role")
-    private UserRole userRole;
+    private String userRole;
     @Transient
     private Set<AppUser> appUsers;
 
@@ -31,11 +30,25 @@ public class AppRole {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AppRole appRole = (AppRole) o;
-        return userRole == appRole.userRole;
+        return userRole.equals(appRole.userRole);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(userRole);
     }
+
+    @Transient
+    @Override
+    public AppRole setIsNew() {
+        super.isNew = true;
+        return this;
+    }
+
+    @Transient
+    @Override
+    public boolean isNew() {
+        return super.isNew || id == null;
+    }
+
 }
