@@ -4,32 +4,30 @@ import com.example.reactivebooking.model.AppRole;
 import com.example.reactivebooking.model.UserRole;
 import com.example.reactivebooking.repositories.AppRoleRepo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
-import java.util.TimeZone;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-@Transactional
+
+@Slf4j
 public class DatabaseUtil {
     private final AppRoleRepo appRoleRepo;
 
     @PostConstruct
     public void initialize(){
-        var amount = appRoleRepo.count();
-        amount.subscribe(result -> {
-            if(result == 0){
-                appRoleRepo.saveAll(
-                        Arrays.stream(UserRole.values())
-                                .map(userRole -> new AppRole(UUID.randomUUID().toString(), userRole, null))
-                                .collect(Collectors.toList())
-                );
+
+        var amount = appRoleRepo.count().block();
+        if(amount != null && amount == 0){
+            for(UserRole userRole : UserRole.values()){
+                AppRole appRole = new AppRole(UUID.randomUUID().toString(), userRole.name(),  null);
+                appRoleRepo.save(appRole.setIsNew()).block();
             }
-        });
+        }
+
+
     }
 }
