@@ -1,6 +1,7 @@
 package com.example.reactivebooking.repositories;
 
 import com.example.reactivebooking.model.AppUser;
+import org.springframework.data.r2dbc.repository.Modifying;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
@@ -23,4 +24,8 @@ public interface AppUserRepo extends ReactiveCrudRepository<AppUser, String> {
             "JOIN app_role ar on ar.id = rau.fk_app_role_id " +
             "WHERE UPPER(ar.user_role) = :userRole")
     Flux<AppUser> findByUserRole(@Param("userRole") String userRole);
+
+    @Modifying
+    @Query("INSERT INTO role_app_user (fk_app_role_id, fk_app_user_id) VALUES(:userId, :appRoleId)")
+    Mono<Void> addAppRoleToAppUser(String userId, String appRoleId);
 }

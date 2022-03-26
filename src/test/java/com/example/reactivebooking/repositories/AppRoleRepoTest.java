@@ -7,16 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 import org.springframework.r2dbc.connection.init.ScriptUtils;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import static com.example.reactivebooking.TestConstants.TEST_DB;
+
 @DataR2dbcTest
 class AppRoleRepoTest {
-
-    private static final Resource TEST_DB = new FileSystemResource("mysql/testdb.sql");
 
     @Autowired
     ConnectionFactory connectionFactory;
@@ -25,7 +23,7 @@ class AppRoleRepoTest {
 
     private void executeSqlScriptBlocking() {
         Mono.from(connectionFactory.create())
-                .flatMap(connection -> ScriptUtils.executeSqlScript(connection, AppRoleRepoTest.TEST_DB)
+                .flatMap(connection -> ScriptUtils.executeSqlScript(connection, TEST_DB)
                         .then(Mono.from(connection.close())))
                 .block();
     }
