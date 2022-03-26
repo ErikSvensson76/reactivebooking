@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -17,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(value = "app_user")
-public class AppUser {
+public class AppUser extends BaseModel<AppUser> implements Persistable<String> {
     @Id
     @Column(value = "id")
     private String id;
@@ -42,5 +43,16 @@ public class AppUser {
     @Override
     public int hashCode() {
         return Objects.hash(username);
+    }
+
+    @Override
+    public AppUser setIsNew() {
+        super.isNew = true;
+        return this;
+    }
+
+    @Override
+    public boolean isNew() {
+        return super.isNew || id == null;
     }
 }
