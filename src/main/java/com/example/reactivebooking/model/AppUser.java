@@ -26,7 +26,6 @@ public class AppUser extends BaseModel<AppUser> implements Persistable<String> {
     private String password;
     @Column(value = "username")
     private String username;
-    private ContactInfo contactInfo;
     @Transient
     private Set<AppRole> roles;
     @Transient

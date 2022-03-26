@@ -26,6 +26,6 @@ public interface AppUserRepo extends ReactiveCrudRepository<AppUser, String> {
     Flux<AppUser> findByUserRole(@Param("userRole") String userRole);
 
     @Modifying
-    @Query("INSERT INTO role_app_user (fk_app_role_id, fk_app_user_id) VALUES(:userId, :appRoleId)")
-    Mono<Void> addAppRoleToAppUser(String userId, String appRoleId);
+    @Query("INSERT INTO role_app_user (fk_app_role_id, fk_app_user_id) VALUES(:appRoleId, :userId)")
+    Mono<Void> addAppRoleToAppUser(@Param("userId") String userId,@Param("appRoleId") String appRoleId);
 }

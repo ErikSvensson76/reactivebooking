@@ -16,7 +16,7 @@ create table app_role
 (
     id varchar(255) not null
         primary key,
-    user_role int null,
+    user_role varchar(50) null,
     constraint UK_7fyeneqlm3twl27ocqsbecmmo
         unique (user_role)
 );
