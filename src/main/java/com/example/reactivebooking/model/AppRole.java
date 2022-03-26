@@ -1,9 +1,11 @@
 package com.example.reactivebooking.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -15,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(value = "app_role")
-public class AppRole extends BaseModel<AppRole> implements Persistable<String> {
+public class AppRole extends BaseModel<AppRole, String> {
 
     @Id
     @Column(value = "id")
