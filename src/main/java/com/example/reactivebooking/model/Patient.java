@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(value = "patient")
-public class Patient {
+public class Patient extends BaseModel<Patient, String>{
     @Id
     @Column(value = "id")
     private String id;
@@ -35,4 +35,18 @@ public class Patient {
     private AppUser userCredentials;
     @Transient
     private List<Booking> vaccineBookings;
+
+
+    @Transient
+    @Override
+    public Patient setIsNew() {
+        super.isNew = true;
+        return this;
+    }
+
+    @Transient
+    @Override
+    public boolean isNew() {
+        return super.isNew || id == null;
+    }
 }
