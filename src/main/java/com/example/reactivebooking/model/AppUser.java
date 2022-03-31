@@ -43,12 +43,14 @@ public class AppUser extends BaseModel<AppUser, String> {
         return Objects.hash(username);
     }
 
+    @Transient
     @Override
     public AppUser setIsNew() {
         super.isNew = true;
         return this;
     }
 
+    @Transient
     @Override
     public boolean isNew() {
         return super.isNew || id == null;
