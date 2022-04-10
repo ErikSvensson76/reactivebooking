@@ -8,12 +8,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
 import org.springframework.r2dbc.connection.init.ScriptUtils;
+import org.springframework.test.annotation.DirtiesContext;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import static com.example.reactivebooking.TestConstants.TEST_DB;
 
 @DataR2dbcTest
+@DirtiesContext
 class AppRoleRepoTest {
 
     @Autowired
