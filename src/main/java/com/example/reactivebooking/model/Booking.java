@@ -1,9 +1,6 @@
 package com.example.reactivebooking.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
@@ -16,6 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"dateTime", "price", "administratorId", "vaccineType", "vacant", "patient", "premises"})
 @Table(value = "booking")
 public class Booking {
     @Id

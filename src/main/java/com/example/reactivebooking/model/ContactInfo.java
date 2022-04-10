@@ -1,9 +1,6 @@
 package com.example.reactivebooking.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
@@ -13,6 +10,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = {"phone", "email"}, callSuper = false )
 @Table(value = "contact_info")
 public class ContactInfo extends BaseModel<ContactInfo, String> {
     @Id

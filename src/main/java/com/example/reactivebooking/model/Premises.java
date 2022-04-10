@@ -1,9 +1,6 @@
 package com.example.reactivebooking.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
@@ -15,8 +12,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = {"name", "address", "bookings"}, callSuper = false)
 @Table(value = "premises")
-public class Premises {
+public class Premises extends BaseModel<Premises, String> {
     @Id
     @Column(value = "id")
     private String id;
@@ -26,4 +24,17 @@ public class Premises {
     private Address address;
     @Transient
     private List<Booking> bookings;
+
+    @Override
+    @Transient
+    public Premises setIsNew() {
+        super.isNew = true;
+        return this;
+    }
+
+    @Override
+    @Transient
+    public boolean isNew() {
+        return super.isNew || id == null;
+    }
 }

@@ -1,21 +1,18 @@
 package com.example.reactivebooking.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.util.Objects;
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = {"appUsers"}, callSuper = false)
 @Table(value = "app_role")
 public class AppRole extends BaseModel<AppRole, String> {
 
@@ -27,18 +24,7 @@ public class AppRole extends BaseModel<AppRole, String> {
     @Transient
     private Set<AppUser> appUsers;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AppRole appRole = (AppRole) o;
-        return userRole.equals(appRole.userRole);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(userRole);
-    }
 
     @Transient
     @Override
